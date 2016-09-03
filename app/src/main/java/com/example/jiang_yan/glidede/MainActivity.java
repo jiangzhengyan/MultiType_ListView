@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                     viewHolder0.gvPic.setAdapter(gvAdapter);
                     break;
                 case 1:
-                    Log.e(TAG, "itemViewType: 1");
+                    Log.e(TAG, "itemV     iewType: 1");
                     if (convertView == null) {
                         convertView = View.inflate(getApplicationContext(), R.layout.item_pic_1, null);
                     }
