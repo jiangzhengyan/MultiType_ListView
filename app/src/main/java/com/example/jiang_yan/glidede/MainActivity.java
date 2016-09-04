@@ -108,7 +108,7 @@ new Lockk().get();
 listPic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position<30){
+        if (position<31){
             new Lockk().get();
             startActivity(new Intent(MainActivity.this,B.class));
         }
