@@ -38,20 +38,22 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         add();
         initView();
-new Lockk().get();
+
         setButton();
     }
+
     private void setButton() {
         new Thread() {
             @Override
             public void run() {
                 for (int i = 60; i > 0; i--) {
                     SystemClock.sleep(1000);
-                    Log.e(TAG, "run:  sleep " );
+                    Log.e(TAG, "run:  sleep ");
                 }
             }
         }.start();
     }
+
     private void add() {
         urls = new ArrayList<>();
         urls.add("http://www.bz55.com/uploads/allimg/150604/140-150604112059.jpg");
@@ -104,15 +106,15 @@ new Lockk().get();
 
             }
         });
-listPic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position<31){
-            new Lockk().get();
-            startActivity(new Intent(MainActivity.this,B.class));
-        }
-    }
-});
+        listPic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position < 31) {
+
+                   //跳转
+                }
+            }
+        });
     }
 
     class PicAdapter extends BaseAdapter {
