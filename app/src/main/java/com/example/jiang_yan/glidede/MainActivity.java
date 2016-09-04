@@ -19,7 +19,6 @@ import android.widget.ListView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
