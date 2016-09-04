@@ -1,22 +1,25 @@
 package com.example.jiang_yan.glidede;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,9 +39,20 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         add();
         initView();
-
+new Lockk().get();
+        setButton();
     }
-
+    private void setButton() {
+        new Thread() {
+            @Override
+            public void run() {
+                for (int i = 60; i > 0; i--) {
+                    SystemClock.sleep(1000);
+                    Log.e(TAG, "run:  sleep " );
+                }
+            }
+        }.start();
+    }
     private void add() {
         urls = new ArrayList<>();
         urls.add("http://www.bz55.com/uploads/allimg/150604/140-150604112059.jpg");
@@ -71,17 +85,17 @@ public class MainActivity extends AppCompatActivity {
         listPic.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                Log.e(TAG, "onScrollStateChanged: "+scrollState );
+                Log.e(TAG, "onScrollStateChanged: " + scrollState);
 //                scrollState  =0  停止
 //                        1  开始
-                if (scrollState==1){
+                if (scrollState == 1) {
                     //开始
-                    Glide.with(getApplicationContext()).pauseRequests();
-                    Log.e(TAG, "onScrollStateChanged:       停止   加载图片" );
-                }else if (scrollState==0){
+//                    Glide.with(getApplicationContext()).pauseRequests();
+                    Log.e(TAG, "onScrollStateChanged:       停止   加载图片");
+                } else if (scrollState == 0) {
                     //停止
-                    Glide.with(getApplicationContext()).resumeRequests();
-                    Log.e(TAG, "onScrollStateChanged:       开始   加载图片" );
+//                    Glide.with(getApplicationContext()).resumeRequests();
+                    Log.e(TAG, "onScrollStateChanged:       开始   加载图片");
 
                 }
             }
@@ -91,7 +105,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+listPic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position<30){
+            new Lockk().get();
+            startActivity(new Intent(MainActivity.this,B.class));
+        }
+    }
+});
     }
 
     class PicAdapter extends BaseAdapter {
@@ -148,22 +170,43 @@ public class MainActivity extends AppCompatActivity {
 //                    gvAdapter = new GvAdapter();
 //                    viewHolder0.gvPic.setAdapter(gvAdapter);
 
-                    if (gvAdapter == null) {
-                        gvAdapter = new GvAdapter();
-                        int ii=viewHolder0.gvPic.getCount();
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ii * 100, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                        viewHolder0.gvPic.setLayoutParams(params);
-                        viewHolder0.gvPic.setColumnWidth(2);
-                        viewHolder0.gvPic.setHorizontalSpacing(1);
-                        viewHolder0.gvPic.setStretchMode(GridView.NO_STRETCH);
-                        viewHolder0.gvPic.setNumColumns(ii);
-                        Log.e(TAG, "  gvAdapter = new GvAdapter();: " );
-                    } else {
+//                    if (gvAdapter == null) {
+//                        gvAdapter = new GvAdapter();
+//
+//                    } else {
+//
+//                        gvAdapter.notifyDataSetChanged();
+//
+//                    }
+//                    int ii = viewHolder0.gvPic.getCount();
+//                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ii * 201, RelativeLayout.LayoutParams.MATCH_PARENT);
+//                    viewHolder0.gvPic.setLayoutParams(params);
+//                    viewHolder0.gvPic.setColumnWidth(200);
+//                    viewHolder0.gvPic.setHorizontalSpacing(1);
+//                    viewHolder0.gvPic.setStretchMode(GridView.NO_STRETCH);
+//                    viewHolder0.gvPic.setNumColumns(ii);
+//                    Log.e(TAG, "  gvAdapter = new GvAdapter();: ");
+//                    viewHolder0.gvPic.setAdapter(gvAdapter);
 
-                        gvAdapter.notifyDataSetChanged();
-
+                    LinearLayout llf = (LinearLayout) convertView.findViewById(R.id.ll_father);
+                    LinearLayout lls = (LinearLayout) convertView.findViewById(R.id.ll_sun);
+                    ImageView iv1 = (ImageView) convertView.findViewById(R.id.iv_1);
+                    ImageView iv2 = (ImageView) convertView.findViewById(R.id.iv_2);
+                    ImageView iv3 = (ImageView) convertView.findViewById(R.id.iv_3);
+                    ImageView iv4 = (ImageView) convertView.findViewById(R.id.iv_4);
+                    ImageView iv5 = (ImageView) convertView.findViewById(R.id.iv_5);
+                    llf.removeAllViews();
+                    for (int u = 5; u > 0; u -= 5) {
+                        Log.e(TAG, " 玄幻");
+                        if (u >= 5) {
+                            Glide.with(getApplicationContext()).load(urls.get(u)).into(iv1);
+                            Glide.with(getApplicationContext()).load(urls.get(u)).into(iv2);
+                            Glide.with(getApplicationContext()).load(urls.get(u)).into(iv3);
+                            Glide.with(getApplicationContext()).load(urls.get(u)).into(iv4);
+                            Glide.with(getApplicationContext()).load(urls.get(u)).into(iv5);
+                        }
+                        llf.addView(lls);
                     }
-                    viewHolder0.gvPic.setAdapter(gvAdapter);
                     break;
                 case 1:
                     Log.e(TAG, "itemV     iewType: 1");
@@ -198,14 +241,14 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView imageView;
 
-        MyGridView gvPic;
+        GridView gvPic;
 
         public ViewHolder(View convertView, int type) {
             Log.e(TAG, "ViewHolder:gou苟傲 ");
-            if (type==0){
-                gvPic=(MyGridView) convertView.findViewById(R.id.gv_pic);
-            }else {
-                imageView=(ImageView)convertView.findViewById(R.id.iv_pic);
+            if (type == 0) {
+                gvPic = (GridView) convertView.findViewById(R.id.gv_pic);
+            } else {
+                imageView = (ImageView) convertView.findViewById(R.id.iv_pic);
             }
         }
 
@@ -227,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
     class GvAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return 1011;
+            return 10;
         }
 
         @Override
